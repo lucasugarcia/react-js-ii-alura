@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import Banner from './components/Banner';
-import Formulario from './components/Formulario';
-import Time from './components/Time';
-import Rodape from './components/Rodape';
+import { useState } from "react";
+import Banner from "./componentes/Banner";
+import Formulario from "./componentes/Formulario";
+import Rodape from "./componentes/Rodape";
+import Time from "./componentes/Time";
 
 function App() {
-  const [times, setTimes] = useState([
+
+  const times = [
     {
       nome: 'Programação',
       corPrimaria: '#D9F7E9',
@@ -40,8 +41,8 @@ function App() {
       nome: 'Inovação e Gestão',
       corPrimaria: '#FFEEDF',
       corSecundaria: '#FF8A29'
-    }
-  ])
+    },
+  ]
 
   const inicial = [
     {
@@ -192,40 +193,15 @@ function App() {
 
   const [colaboradores, setColaboradores] = useState(inicial)
 
-  function deletarColaborador() {
-    console.log("Deletando colaborador")
-  }
-
-  function mudarCorDoTime(cor, nome){
-    setTimes(times.map(time => {
-      if(time.nome === nome)
-      {
-        time.corSecundaria = cor;
-      }
-
-      return time;
-    }));
-  }
 
   return (
     <div>
       <Banner />
-      <Formulario 
-        times={times.map(time => time.nome)} 
-        aoColaboradorCadastrado={colaborador => setColaboradores([...colaboradores, colaborador])}
-      />
-      
+      <Formulario times={times.map(time => time.nome)} aoCadastrar={colaborador => setColaboradores([...colaboradores, colaborador])} />
       <section className="times">
         <h1>Minha organização</h1>
-        {times.map((time, indice) => 
-          <Time 
-            key={indice} 
-            time={time} 
-            colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)} 
-            aoDeletar={deletarColaborador} 
-            mudarCor = {mudarCorDoTime}
-          />
-        )}
+        {
+          times.map((time, indice) => <Time key={indice} time={time} colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)} />)}
       </section>
       <Rodape />
     </div>
